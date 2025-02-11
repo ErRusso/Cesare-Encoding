@@ -9,10 +9,25 @@ char CHARSET[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P
 
 using namespace std;
 
+string decode(string str, int key = 3)
+{
+    string result = "";
+    for (int i = 0; i < str.length(); ++i)
+    {
+        if(str[i]==' ') continue;                                       // skip in case of a space
+        if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
+        uint temp = (str.at(i)-CHAR_START)-key;
+        temp < 0 ? temp+=strlen(CHARSET)+1 : 0;
+        result += CHARSET[temp];
+    }
+    return result;
+}
+
 string encode(string str, int key = 3)
 {
     string result = "";
-    for(int i = 0; i<str.length(); ++i){
+    for(int i = 0; i<str.length(); ++i)
+    {
         if(str[i]==' ') continue;                                       // skip in case of a space
         if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
         uint temp = (str.at(i)-CHAR_START)+key;
@@ -30,6 +45,7 @@ int main(int argc, char** argv)
 
     transform(frase.begin(), frase.end(), frase.begin(), ::toupper);
     cout<<"La frase cifrata è\t: "<<TORED(encode(frase,key))<<endl;
+    cout<<"La frase decifrata è\t: "<<decode(encode(frase,key),key)<<endl;
 
     return 0;
 }

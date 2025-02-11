@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <string.h>
 
-#define uint unsigned int
 #define CHAR_START 65
 #define TORED(str)("\033[31m"+str+"\033[0m")
 char CHARSET[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -16,8 +15,8 @@ string decode(string str, int key = 3)
     {
         if(str[i]==' ') continue;                                       // skip in case of a space
         if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
-        uint temp = (str.at(i)-CHAR_START)-key;
-        temp < 0 ? temp+=strlen(CHARSET)+1 : 0;
+        int temp = (str.at(i)-CHAR_START)-key;
+        if (temp < 0) temp += strlen(CHARSET);
         result += CHARSET[temp];
     }
     return result;
@@ -30,8 +29,8 @@ string encode(string str, int key = 3)
     {
         if(str[i]==' ') continue;                                       // skip in case of a space
         if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
-        uint temp = (str.at(i)-CHAR_START)+key;
-        temp > strlen(CHARSET)+1 ? temp-=strlen(CHARSET)+1 : 0;
+        int temp = (str.at(i)-CHAR_START)+key;
+        if (temp >= strlen(CHARSET)) temp -= strlen(CHARSET);
         result += CHARSET[temp];
     }
     return result;

@@ -1,0 +1,1 @@
+g++ -Wall -I ./INCLUDE/ -o cesare.exe init.cpp

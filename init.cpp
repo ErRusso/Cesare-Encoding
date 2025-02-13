@@ -2,42 +2,13 @@
 #include <algorithm>
 #include <string.h>
 #include "INCLUDE/debug.hpp"
+#include "INCLUDE/cesare.hpp"
 
-#define CHAR_START 65
 #define TORED(str)("\033[31m"+str+"\033[0m")
-char CHARSET[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-
+extern char CHARSET[26];
 bool DEBUG_FLAG = false;
 
 using namespace std;
-
-string decode(string str, int key = 3)
-{
-    string result = "";
-    for (int i = 0; i < str.length(); ++i)
-    {
-        if(str[i]==' ') continue;                                       // skip in case of a space
-        if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
-        int temp = (str.at(i)-CHAR_START)-key;
-        if (temp < 0) temp += strlen(CHARSET);
-        result += CHARSET[temp];
-    }
-    return result;
-}
-
-string encode(string str, int key = 3)
-{
-    string result = "";
-    for(int i = 0; i<str.length(); ++i)
-    {
-        if(str[i]==' ') continue;                                       // skip in case of a space
-        if(str[i]>='0' && str[i]<='9'){ result += str[i]; continue; }   // skip in case of a number
-        int temp = (str.at(i)-CHAR_START)+key;
-        if (temp >= strlen(CHARSET)) temp -= strlen(CHARSET);
-        result += CHARSET[temp];
-    }
-    return result;
-}
 
 int main(int argc, char** argv)
 {

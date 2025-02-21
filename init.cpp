@@ -4,7 +4,6 @@
 #include "INCLUDE/debug.hpp"
 #include "INCLUDE/cesare.hpp"
 
-#define TORED(str)("\033[31m"+str+"\033[0m")
 extern char CHARSET[26];
 bool DEBUG_FLAG = false;
 
@@ -16,7 +15,7 @@ int main(int argc, char** argv)
         DEBUG_FLAG = true;
     debug_print("Debug mode enabled with args: ");
     string args_used = "";
-    for (size_t i = 0; i < argc; i++)
+    for (size_t i = 1; i < argc; i++)
         args_used += argv[i] + string(" ");
     debug_print(args_used);
     
@@ -30,6 +29,7 @@ insert_key:
         cout<<"Chiave non valida, riprova"<<endl;
         goto insert_key;
     }
+    debug_print("Frase inserita: "+frase + "\nChiave inserita: " + to_string(key));
 
     transform(frase.begin(), frase.end(), frase.begin(), ::toupper);
     cout<<"La frase cifrata è\t: "<<TORED(encode(frase,key))<<endl;
